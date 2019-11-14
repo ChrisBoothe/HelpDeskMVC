@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDeskMVC", "HelpDeskMVC\HelpDeskMVC.csproj", "{C1FCDEE3-3DDA-4354-9B04-56F18A11A571}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDeskMVC.Tests", "HelpDeskMVC.Tests\HelpDeskMVC.Tests.csproj", "{708FB433-2D1D-4161-9F46-6355C3B81621}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1FCDEE3-3DDA-4354-9B04-56F18A11A571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1FCDEE3-3DDA-4354-9B04-56F18A11A571}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1FCDEE3-3DDA-4354-9B04-56F18A11A571}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1FCDEE3-3DDA-4354-9B04-56F18A11A571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708FB433-2D1D-4161-9F46-6355C3B81621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708FB433-2D1D-4161-9F46-6355C3B81621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708FB433-2D1D-4161-9F46-6355C3B81621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708FB433-2D1D-4161-9F46-6355C3B81621}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10A5E0C3-F805-4883-912B-B7E4C78593B8}
+	EndGlobalSection
+EndGlobal
