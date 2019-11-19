@@ -35,11 +35,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketPriority)
+            @Html.DisplayNameFor(model => model.CreationDate)
         </dt>
 
-        <dd>            
-            @Html.DisplayFor(model => model.TicketPriority)
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
         </dd>
 
         <dt>
@@ -51,23 +51,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ClosedDate)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ClosedDate)
-        </dd>       
+        </dd>
 
     </dl>
 </div>
-<p>    
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

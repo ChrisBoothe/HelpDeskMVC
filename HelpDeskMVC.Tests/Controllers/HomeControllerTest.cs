@@ -32,7 +32,7 @@ namespace HelpDeskMVC.Tests.Controllers
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Details() as ViewResult;
+            ViewResult result = controller.Details(Guid? id) as ViewResult;
 
             // Assert
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);

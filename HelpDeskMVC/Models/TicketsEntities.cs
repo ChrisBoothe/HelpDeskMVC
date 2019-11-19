@@ -17,7 +17,7 @@ namespace HelpDeskMVC.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ticket>()
-                .Property(e => e.Title)
+                .Property(e => e.Summary)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Ticket>()

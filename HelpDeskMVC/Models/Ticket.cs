@@ -16,7 +16,7 @@ namespace HelpDeskMVC.Models
 
         [Required(ErrorMessage = "A title is required.")]
         [StringLength(50)]
-        public string Title { get; set; }
+        public string Summary { get; set; }
 
         [Required(ErrorMessage = "A description is required.")]
         [StringLength(1000)]
@@ -29,7 +29,8 @@ namespace HelpDeskMVC.Models
         [StringLength(10)]
         public string Creator { get; set; }
 
-        public bool Closed { get; set; }
+        [Display(Name = "Closed")]
+        public Nullable<System.DateTime> ClosedDate { get; set; }
 
 
         [Display(Name = "Priority")]

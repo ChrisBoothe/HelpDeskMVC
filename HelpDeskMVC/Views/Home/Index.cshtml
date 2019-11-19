@@ -5,10 +5,12 @@
 }
 
 <h3>Dashboard</h3>
-<br/>
+<br />
+
+@Html.Raw(TempData["msg"])
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="button" value="New Ticket" class="btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
 </p>
 <table class="table">
     <tr>
@@ -16,55 +18,46 @@
             @Html.DisplayNameFor(model => model.TicketNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            @Html.DisplayNameFor(model => model.Summary)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Creator)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Closed)
+            @Html.DisplayNameFor(model => model.TicketPriority)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketPriority)
+            @Html.DisplayNameFor(model => model.ClosedDate)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Creator)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Closed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketPriority)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TicketGuid }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TicketGuid }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TicketGuid })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        using (Html.BeginForm("Close", "Home", new { id = item.TicketGuid }))
+        {
+            @Html.AntiForgeryToken()
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClosedDate)
+                </td>
+                <td>
+                    <input type="button" value="Details" class="btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
+                    <input type="submit" value="Close" class="btn-primary"/>
+                </td>
+            </tr>
+        }
+    }
 </table>
