@@ -15,19 +15,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TicketNumber)
+            @Html.ActionLink("#", "Index", new { sortOrder = ViewBag.NumberSortParm})
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Summary)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Creator)
+            @Html.ActionLink("Creator", "Index", new { sortOrder = ViewBag.CreatorSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketPriority)
+            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ClosedDate)
+            @Html.ActionLink("Closed Date", "Index", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th></th>
     </tr>

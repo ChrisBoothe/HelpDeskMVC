@@ -10,13 +10,39 @@ namespace HelpDeskMVC.Controllers
 {
     public class HomeController : Controller
     {
-
         private TicketsEntities db = new TicketsEntities();
 
         // GET: Tickets
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Tickets.OrderByDescending(x => x.TicketNumber).ToList());
+            ViewBag.NumberSortParm = String.IsNullOrEmpty(sortOrder) ? "number" : "";
+            ViewBag.CreatorSortParm = String.IsNullOrEmpty(sortOrder) ? "creator" : "";
+            ViewBag.PrioritySortParm = String.IsNullOrEmpty(sortOrder) ? "priorityDesc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "dateDesc" : "Date";            
+
+            var tickets = from t in db.Tickets
+                          select t;
+
+            switch (sortOrder)
+            {
+                case "number":
+                    tickets = tickets.OrderBy(t => t.TicketNumber);
+                    break;                    
+                case "creator":
+                    tickets = tickets.OrderBy(t => t.Creator);
+                    break;
+                case "priorityDesc":
+                    tickets = tickets.OrderByDescending(t => t.TicketPriority);
+                    break;
+                case "Date":
+                    tickets = tickets.OrderByDescending(t => t.ClosedDate);
+                    break;
+                default:
+                    tickets = tickets.OrderByDescending(t => t.TicketNumber);
+                    break;
+            }
+
+            return View(tickets.ToList());            
         }
 
         // GET: Tickets/Details
