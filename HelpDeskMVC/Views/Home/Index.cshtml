@@ -12,10 +12,19 @@
 <p>
     <input type="button" value="New Ticket" class="btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by Creator or Ticket #: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("#", "Index", new { sortOrder = ViewBag.NumberSortParm})
+            @Html.ActionLink("#", "Index", new { sortOrder = ViewBag.NumberSortParm })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Summary)
@@ -55,7 +64,7 @@
                 </td>
                 <td>
                     <input type="button" value="Details" class="btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
-                    <input type="submit" value="Close" class="btn-primary"/>
+                    <input type="submit" value="Close" class="btn-primary" />
                 </td>
             </tr>
         }

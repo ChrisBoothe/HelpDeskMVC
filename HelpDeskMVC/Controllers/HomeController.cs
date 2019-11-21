@@ -13,7 +13,7 @@ namespace HelpDeskMVC.Controllers
         private TicketsEntities db = new TicketsEntities();
 
         // GET: Tickets
-        public ActionResult Index(string sortOrder)
+        public ViewResult Index(string sortOrder, string searchString)
         {
             ViewBag.NumberSortParm = String.IsNullOrEmpty(sortOrder) ? "number" : "";
             ViewBag.CreatorSortParm = String.IsNullOrEmpty(sortOrder) ? "creator" : "";
@@ -22,6 +22,12 @@ namespace HelpDeskMVC.Controllers
 
             var tickets = from t in db.Tickets
                           select t;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tickets = tickets.Where(s => s.Creator.Contains(searchString)
+                                       || s.TicketNumber.ToString().Contains(searchString));
+            }
 
             switch (sortOrder)
             {
