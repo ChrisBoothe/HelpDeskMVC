@@ -1,7 +1,9 @@
-﻿@model IEnumerable<HelpDeskMVC.Models.Ticket>
+﻿@model PagedList.IPagedList<HelpDeskMVC.Models.Ticket>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tickets";
 }
 
 <h3>Dashboard</h3>
@@ -10,35 +12,37 @@
 @Html.Raw(TempData["msg"])
 
 <p>
-    <input type="button" value="New Ticket" class="btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
+    <input type="button" value="New Ticket" class="btn-sm btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
 </p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
     <p>
-        Find by Creator or Ticket #: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        Find by Creator or Ticket #: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" class="btn-sm btn-default"/>
     </p>
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("#", "Index", new { sortOrder = ViewBag.NumberSortParm })
+            @Html.ActionLink("#", "Index", new { sortOrder = ViewBag.NumberSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Summary)
+            Summary
         </th>
         <th>
-            @Html.ActionLink("Creator", "Index", new { sortOrder = ViewBag.CreatorSortParm })
+            @Html.ActionLink("Creator", "Index", new { sortOrder = ViewBag.CreatorSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm })
+            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("Closed Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @Html.ActionLink("Closed Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th></th>
+        <th>
+            Action
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -63,10 +67,15 @@
                     @Html.DisplayFor(modelItem => item.ClosedDate)
                 </td>
                 <td>
-                    <input type="button" value="Details" class="btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
-                    <input type="submit" value="Close" class="btn-primary" />
+                    <input type="button" value="Details" class="btn-xs btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
+                    <input type="submit" value="Close" class="btn-xs btn-primary" />
                 </td>
             </tr>
         }
     }
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace HelpDeskMVC.Controllers
 {
@@ -13,12 +14,24 @@ namespace HelpDeskMVC.Controllers
         private TicketsEntities db = new TicketsEntities();
 
         // GET: Tickets
-        public ViewResult Index(string sortOrder, string searchString)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NumberSortParm = String.IsNullOrEmpty(sortOrder) ? "number" : "";
             ViewBag.CreatorSortParm = String.IsNullOrEmpty(sortOrder) ? "creator" : "";
             ViewBag.PrioritySortParm = String.IsNullOrEmpty(sortOrder) ? "priorityDesc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "dateDesc" : "Date";            
+
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
 
             var tickets = from t in db.Tickets
                           select t;
@@ -48,7 +61,9 @@ namespace HelpDeskMVC.Controllers
                     break;
             }
 
-            return View(tickets.ToList());            
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(tickets.ToPagedList(pageNumber, pageSize));            
         }
 
         // GET: Tickets/Details
@@ -65,7 +80,6 @@ namespace HelpDeskMVC.Controllers
             }
             return View(ticket);
         }
-
 
         // GET: Tickets/Create
         public ActionResult Create()
@@ -111,6 +125,15 @@ namespace HelpDeskMVC.Controllers
                 TempData["msg"] = "<script>alert('This ticket has already been closed.');</script>";
                 return RedirectToAction("Index");
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
