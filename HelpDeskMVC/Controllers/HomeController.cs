@@ -122,7 +122,7 @@ namespace HelpDeskMVC.Controllers
 
             else
             {
-                TempData["msg"] = "<script>alert('This ticket has already been closed.');</script>";
+                TempData["Message"] = "This ticket has already been closed.";
                 return RedirectToAction("Index");
             }
         }

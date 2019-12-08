@@ -9,7 +9,7 @@
 <h3>Dashboard</h3>
 <br />
 
-@Html.Raw(TempData["msg"])
+
 
 <p>
     <input type="button" value="New Ticket" class="btn-sm btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
@@ -60,9 +60,28 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Creator)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketPriority)
-                </td>
+
+                @if(item.TicketPriority.ToString() == "High")
+                {
+                    <td class="bg-danger">                    
+                        @Html.DisplayFor(modelItem => item.TicketPriority)
+                    </td>
+                }
+                else if(item.TicketPriority.ToString() == "Low")
+
+                {
+                    <td class="bg-info">                    
+                        @Html.DisplayFor(modelItem => item.TicketPriority)
+                    </td>
+                }
+
+                else
+                {
+                    <td class="bg-warning">                    
+                        @Html.DisplayFor(modelItem => item.TicketPriority)
+                    </td>
+                }
+
                 <td>
                     @Html.DisplayFor(modelItem => item.ClosedDate)
                 </td>

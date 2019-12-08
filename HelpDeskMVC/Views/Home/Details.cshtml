@@ -9,15 +9,21 @@
 <div>
     <h4>Ticket</h4>
     <hr />
+
+    @if(Model.TicketPriority.ToString() == "High")
+    {
+        <div class="alert alert-danger">
+            This is a high priority ticket.
+        </div>
+    }
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TicketNumber)
-            
+            @Html.DisplayNameFor(model => model.TicketNumber)            
         </dt>
         
         <dd>
-            @Html.DisplayFor(model => model.TicketNumber)
-            
+            @Html.DisplayFor(model => model.TicketNumber)            
         </dd>
 
         <dt>
@@ -40,7 +46,7 @@
             @Html.DisplayNameFor(model => model.TicketPriority)
         </dt>
 
-        <dd>
+        <dd>           
             @Html.DisplayFor(model => model.TicketPriority)
         </dd>
 
