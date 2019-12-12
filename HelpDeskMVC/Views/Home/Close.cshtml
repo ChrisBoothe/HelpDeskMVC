@@ -1,0 +1,19 @@
+﻿@model HelpDeskMVC.Models.Ticket
+
+@{
+    ViewBag.Title = "Close";
+}
+
+<h3>Closing Comments for Ticket # @Html.DisplayFor(model => model.TicketNumber) : @Html.DisplayFor(model => model.Summary)</h3>
+
+<br />
+<div>
+    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+</div>  
+
+<br />
+<p>
+    <input type="button" class="btn-xs btn-default" value="Cancel" onclick="location.href='@Url.Action("Details", "Home", new {id = Model.TicketGuid })'" />
+
+</p>

@@ -4,13 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-<h3>Details</h3>
+<h3>Ticket Details</h3>
 
-<div>
-    <h4>Ticket</h4>
+<div>    
     <hr />
 
-    @if(Model.TicketPriority.ToString() == "High")
+    @if (Model.TicketPriority.ToString() == "High")
     {
         <div class="alert alert-danger">
             This is a high priority ticket.
@@ -19,11 +18,11 @@
 
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TicketNumber)            
+            @Html.DisplayNameFor(model => model.TicketNumber)
         </dt>
-        
+
         <dd>
-            @Html.DisplayFor(model => model.TicketNumber)            
+            @Html.DisplayFor(model => model.TicketNumber)
         </dd>
 
         <dt>
@@ -46,7 +45,7 @@
             @Html.DisplayNameFor(model => model.TicketPriority)
         </dt>
 
-        <dd>           
+        <dd>
             @Html.DisplayFor(model => model.TicketPriority)
         </dd>
 
@@ -76,6 +75,6 @@
 
     </dl>
 </div>
-<p>    
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<input type="button" class="btn-xs btn-default" value="Dashboard" onclick="location.href='@Url.Action("Index", "Home")'" />
+<input type="button" class="btn-xs btn-primary" value="Close" onclick="location.href='@Url.Action("Close", "Home", new {id = Model.TicketGuid })'" />

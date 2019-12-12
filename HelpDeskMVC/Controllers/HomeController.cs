@@ -106,10 +106,30 @@ namespace HelpDeskMVC.Controllers
             return View(ticket);
         }
 
-        //POST: Tickets/Close
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //GET : Tickets/Close
         public ActionResult Close(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            if (ticket.ClosedDate != null)
+            {
+                TempData["Message"] = "This ticket has already been closed.";
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
+        }
+
+        //POST: Tickets/Close
+        [HttpPost, ActionName("Close")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CloseConfirmed(Guid id)
         {
             Ticket ticket = db.Tickets.Find(id);
 

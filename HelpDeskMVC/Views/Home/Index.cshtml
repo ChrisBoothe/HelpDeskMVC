@@ -47,50 +47,48 @@
 
     @foreach (var item in Model)
     {
-        using (Html.BeginForm("Close", "Home", new { id = item.TicketGuid }))
-        {
-            @Html.AntiForgeryToken()
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Summary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Creator)
-                </td>
+        
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator)
+            </td>
 
-                @if(item.TicketPriority.ToString() == "High")
-                {
-                    <td class="bg-danger">                    
-                        @Html.DisplayFor(modelItem => item.TicketPriority)
-                    </td>
-                }
-                else if(item.TicketPriority.ToString() == "Low")
-
-                {
-                    <td class="bg-info">                    
-                        @Html.DisplayFor(modelItem => item.TicketPriority)
-                    </td>
-                }
-
-                else
-                {
-                    <td class="bg-warning">                    
-                        @Html.DisplayFor(modelItem => item.TicketPriority)
-                    </td>
-                }
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClosedDate)
+            @if(item.TicketPriority.ToString() == "High")
+            {
+                <td class="bg-danger">                    
+                    @Html.DisplayFor(modelItem => item.TicketPriority)
                 </td>
-                <td>
-                    <input type="button" value="Details" class="btn-xs btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
-                    <input type="submit" value="Close" class="btn-xs btn-primary" />
+            }
+            else if(item.TicketPriority.ToString() == "Low")
+
+            {
+                <td class="bg-info">                    
+                    @Html.DisplayFor(modelItem => item.TicketPriority)
                 </td>
-            </tr>
-        }
+            }
+
+            else
+            {
+                <td class="bg-warning">                    
+                    @Html.DisplayFor(modelItem => item.TicketPriority)
+                </td>
+            }
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ClosedDate)
+            </td>
+            <td>
+                <input type="button" value="Details" class="btn-xs btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
+                <input type="button" value="Close" class="btn-xs btn-primary" onclick="location.href='@Url.Action("Close", "Home", new {id = item.TicketGuid })'"/>
+            </td>
+        </tr>
+        
     }
 </table>
 <br />
