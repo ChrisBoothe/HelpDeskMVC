@@ -14,7 +14,7 @@ namespace HelpDeskMVC.Models
         [Display(Name = "#")]
         public int TicketNumber { get; set; }
 
-        [Required(ErrorMessage = "A title is required.")]
+        [Required(ErrorMessage = "A summary is required.")]
         [StringLength(50)]
         public string Summary { get; set; }
 
@@ -26,15 +26,19 @@ namespace HelpDeskMVC.Models
         public DateTime CreationDate { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(25)]
         public string Creator { get; set; }
 
         [Display(Name = "Closed")]
         public Nullable<System.DateTime> ClosedDate { get; set; }
 
-
         [Display(Name = "Priority")]
-        [Required (ErrorMessage = "A priority status is required.")]
+        [Required(ErrorMessage = "A priority status is required.")]
         public TicketPriority TicketPriority { get; set; }
+
+        [Display(Name ="Closing Comments")]
+        [Required(ErrorMessage = "Closing comments are required to close this ticket.")]
+        [StringLength(1000)]
+        public string ClosingComments { get; set; }
     }
 }

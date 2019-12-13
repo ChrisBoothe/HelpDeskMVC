@@ -4,17 +4,16 @@
     ViewBag.Title = "Create";
 }
 
-<h3>Create</h3>
-
+<h3>Create Ticket</h3>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-<div class="form-horizontal">
-    <h4>Ticket</h4>
+<div class="form-horizontal">    
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -46,11 +45,11 @@
             @Html.EnumDropDownListFor(model => model.TicketPriority, "Select an option", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TicketPriority, "", new { @class = "text-danger" })
         </div>
-    </div>    
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Create" class="btn-sm btn-default" />
         </div>
     </div>
 </div>

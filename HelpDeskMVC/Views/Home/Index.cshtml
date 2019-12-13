@@ -9,8 +9,6 @@
 <h3>Dashboard</h3>
 <br />
 
-
-
 <p>
     <input type="button" value="New Ticket" class="btn-sm btn-success" onclick="location.href='@Url.Action("Create", "Home")'" />
 </p>
@@ -46,8 +44,7 @@
     </tr>
 
     @foreach (var item in Model)
-    {
-        
+    {        
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.TicketNumber)
@@ -66,13 +63,11 @@
                 </td>
             }
             else if(item.TicketPriority.ToString() == "Low")
-
             {
                 <td class="bg-info">                    
                     @Html.DisplayFor(modelItem => item.TicketPriority)
                 </td>
             }
-
             else
             {
                 <td class="bg-warning">                    
@@ -85,7 +80,10 @@
             </td>
             <td>
                 <input type="button" value="Details" class="btn-xs btn-default" onclick="location.href='@Url.Action("Details", "Home", new {id = item.TicketGuid })'" />
-                <input type="button" value="Close" class="btn-xs btn-primary" onclick="location.href='@Url.Action("Close", "Home", new {id = item.TicketGuid })'"/>
+                @if (item.ClosedDate == null)
+                {
+                    <input type="button" value="Close" class="btn-xs btn-primary" onclick="location.href='@Url.Action("Close", "Home", new {id = item.TicketGuid })'" />
+                }
             </td>
         </tr>
         

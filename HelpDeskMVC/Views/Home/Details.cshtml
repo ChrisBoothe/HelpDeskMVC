@@ -6,7 +6,7 @@
 
 <h3>Ticket Details</h3>
 
-<div>    
+<div>
     <hr />
 
     @if (Model.TicketPriority.ToString() == "High")
@@ -65,16 +65,31 @@
             @Html.DisplayFor(model => model.CreationDate)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ClosedDate)
-        </dt>
+        @if (Model.ClosedDate != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.ClosedDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ClosedDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ClosedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClosingComments)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClosingComments)
+            </dd>
+        }
 
     </dl>
 </div>
 
-<input type="button" class="btn-xs btn-default" value="Dashboard" onclick="location.href='@Url.Action("Index", "Home")'" />
-<input type="button" class="btn-xs btn-primary" value="Close" onclick="location.href='@Url.Action("Close", "Home", new {id = Model.TicketGuid })'" />
+<input type="button" class="btn-sm btn-default" value="Dashboard" onclick="location.href='@Url.Action("Index", "Home")'" />
+@if (Model.ClosedDate == null)
+{
+    <input type="button" class="btn-sm btn-primary" value="Close" onclick="location.href='@Url.Action("Close", "Home", new {id = Model.TicketGuid })'" />
+}
+

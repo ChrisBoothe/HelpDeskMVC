@@ -27,6 +27,10 @@ namespace HelpDeskMVC.Models
             modelBuilder.Entity<Ticket>()
                 .Property(e => e.Creator)
                 .IsFixedLength();
+
+            modelBuilder.Entity<Ticket>()
+                .Property(e => e.ClosingComments)
+                .IsUnicode(false);
         }
     }
 }

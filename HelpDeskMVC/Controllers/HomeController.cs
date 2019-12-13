@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Data.Entity;
 
 namespace HelpDeskMVC.Controllers
 {
@@ -60,7 +61,6 @@ namespace HelpDeskMVC.Controllers
                     tickets = tickets.OrderByDescending(t => t.TicketNumber);
                     break;
             }
-
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(tickets.ToPagedList(pageNumber, pageSize));            
@@ -102,11 +102,10 @@ namespace HelpDeskMVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(ticket);
         }
 
-        //GET : Tickets/Close
+        // GET : Tickets/Close
         public ActionResult Close(Guid? id)
         {
             if (id == null)
@@ -125,26 +124,18 @@ namespace HelpDeskMVC.Controllers
             }
             return View(ticket);
         }
-
-        //POST: Tickets/Close
-        [HttpPost, ActionName("Close")]
+                
+        // POST: Tickets/Close/        
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CloseConfirmed(Guid id)
-        {
-            Ticket ticket = db.Tickets.Find(id);
-
-            if (ticket.ClosedDate == null)
-            {                
-                ticket.ClosedDate = DateTime.Now;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            else
-            {
-                TempData["Message"] = "This ticket has already been closed.";
-                return RedirectToAction("Index");
-            }
+        public ActionResult Close([Bind(Include = "TicketGuid,TicketNumber,Summary,Description,CreationDate," +
+            "Creator,ClosedDate,TicketPriority,ClosingComments")] Ticket ticket)
+        {            
+            ticket.ClosedDate = DateTime.Now;
+            db.Entry(ticket).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["Message"] = "Ticket successfully Closed!";
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
