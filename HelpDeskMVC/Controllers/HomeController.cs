@@ -40,7 +40,8 @@ namespace HelpDeskMVC.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 tickets = tickets.Where(s => s.Creator.Contains(searchString)
-                                       || s.TicketNumber.ToString().Contains(searchString));
+                                       || s.TicketNumber.ToString().Contains(searchString)
+                                       || s.Summary.ToString().Contains(searchString));
             }
 
             switch (sortOrder)
@@ -53,6 +54,9 @@ namespace HelpDeskMVC.Controllers
                     break;
                 case "priorityDesc":
                     tickets = tickets.OrderByDescending(t => t.TicketPriority);
+                    break;
+                case "dateDesc":
+                    tickets = tickets.OrderBy(t => t.ClosedDate);
                     break;
                 case "Date":
                     tickets = tickets.OrderByDescending(t => t.ClosedDate);
@@ -91,7 +95,7 @@ namespace HelpDeskMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TicketGuid,TicketNumber,Summary,Description,CreationDate," +
-            "Creator,ClosedDate,TicketPriority")] Ticket ticket)
+            "Creator,ClosedDate,TicketPriority,ClosingComments")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -100,6 +104,7 @@ namespace HelpDeskMVC.Controllers
                 ticket.CreationDate = DateTime.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
+                TempData["Message"] = "Ticket successfully created!";
                 return RedirectToAction("Index");
             }
             return View(ticket);
@@ -116,12 +121,7 @@ namespace HelpDeskMVC.Controllers
             if (ticket == null)
             {
                 return HttpNotFound();
-            }
-            if (ticket.ClosedDate != null)
-            {
-                TempData["Message"] = "This ticket has already been closed.";
-                return RedirectToAction("Index");
-            }
+            }            
             return View(ticket);
         }
                 
@@ -130,12 +130,16 @@ namespace HelpDeskMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Close([Bind(Include = "TicketGuid,TicketNumber,Summary,Description,CreationDate," +
             "Creator,ClosedDate,TicketPriority,ClosingComments")] Ticket ticket)
-        {            
-            ticket.ClosedDate = DateTime.Now;
-            db.Entry(ticket).State = EntityState.Modified;
-            db.SaveChanges();
-            TempData["Message"] = "Ticket successfully Closed!";
-            return RedirectToAction("Index");
+        {
+            if (ModelState.IsValid)
+            {
+                ticket.ClosedDate = DateTime.Now;
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Message"] = "Ticket successfully closed!";
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
         }
 
         protected override void Dispose(bool disposing)

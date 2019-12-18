@@ -16,7 +16,7 @@
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
     <p>
-        Find by Creator or Ticket #: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        Find by Creator, Summary, or Ticket #: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" class="btn-sm btn-default"/>
     </p>
 }

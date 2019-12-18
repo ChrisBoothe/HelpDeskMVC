@@ -36,8 +36,7 @@ namespace HelpDeskMVC.Models
         [Required(ErrorMessage = "A priority status is required.")]
         public TicketPriority TicketPriority { get; set; }
 
-        [Display(Name ="Closing Comments")]
-        [Required(ErrorMessage = "Closing comments are required to close this ticket.")]
+        [Display(Name ="Closing Comments")]        
         [StringLength(1000)]
         public string ClosingComments { get; set; }
     }
