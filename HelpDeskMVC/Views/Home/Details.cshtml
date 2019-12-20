@@ -8,11 +8,10 @@
 
 <div>
     <hr />
-
-    @if (Model.TicketPriority.ToString() == "High")
+    @if (Model.ClosedDate != null)
     {
-        <div class="alert alert-danger">
-            This is a high priority ticket.
+        <div class="alert alert-info">
+            This ticket has been closed.
         </div>
     }
 
@@ -86,9 +85,20 @@
     </dl>
 </div>
 
-<input type="button" class="btn-sm btn-default" value="Dashboard" onclick="location.href='@Url.Action("Index", "Home")'" />
-@if (Model.ClosedDate == null)
+@using (Html.BeginForm("Reopen", "Home", new { id = Model.TicketGuid }))
 {
-    <input type="button" class="btn-sm btn-primary" value="Close" onclick="location.href='@Url.Action("Close", "Home", new {id = Model.TicketGuid })'" />
-}
+    @Html.AntiForgeryToken()
+    {        
+        <input type="button" class="btn-sm btn-default " value="Dashboard" onclick="location.href='@Url.Action("Index", "Home")'" />
 
+        if (Model.ClosedDate != null)
+        {
+            <input type="submit" class="btn-sm btn-warning " value="Open" />
+        }
+
+        if (Model.ClosedDate == null)
+        {
+            <input type="button" class="btn-sm btn-primary " value="Close" onclick="location.href='@Url.Action("Close", "Home", new {id = Model.TicketGuid })'" />
+        }        
+    }
+}

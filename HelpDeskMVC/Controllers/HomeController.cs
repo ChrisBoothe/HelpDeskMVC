@@ -142,6 +142,22 @@ namespace HelpDeskMVC.Controllers
             return View(ticket);
         }
 
+        // POST: Tickets/Reopen
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reopen(Guid? id)
+        {
+            if (ModelState.IsValid)
+            {
+                Ticket ticket = db.Tickets.Find(id);
+                ticket.ClosedDate = null;
+                db.SaveChanges();
+                TempData["Message"] = "Ticket successfully re-opened!";
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
